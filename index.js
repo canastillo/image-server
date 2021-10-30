@@ -29,7 +29,7 @@ app.post('/upload-single', upload.single('profile_pic'), (req, res) => {
         else if (!req.file) {
             return res.send('Please select an image to upload');
         }
-        res.send(`You have uploaded this image: <hr/><img src="./uploads/${req.file.filename}" width="500"><hr /><a href="./">Upload another image</a>`);
+        res.send(`You have uploaded this image: <hr/><img src="./uploads/${req.file.filename}" width="500"><hr /><a href="./uploads/${req.file.filename}">View image</a><a href="./">Upload another image</a>`);
     });
 
 
