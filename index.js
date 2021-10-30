@@ -43,6 +43,6 @@ myApp.use(express.static(path.join(__dirname, 'public')));
 
 // ACTION: Force server into listening mode, making it available to respond to client requests. Note that the 
 // server will listen for requests at port 1234.
-var server = myApp.listen(1234);
+var server = myApp.listen(process.env.PORT || 5000);
 
 // NOTE: You can call this server using http://localhost:1234/cat_picture.jpeg
