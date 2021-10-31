@@ -1,13 +1,15 @@
 const express = require('express');
 const path = require('path');
 const multer = require('multer');
-const less = require('less-middleware');
+const fs = require('fs');
 
 const helpers = require('./helpers');
-const port = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5000;
+const PUBLIC_PATH = path.join(__dirname, 'public')
+
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(PUBLIC_PATH));
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb) {
@@ -34,19 +36,9 @@ app.post('/upload-single', upload.single('profile_pic'), (req, res) => {
 
 
 
-// app.use(less(path.join(__dirname,'source','less'),{
-//     dest: path.join(__dirname, 'public'),
-//     options: {
-//         compiler: {
-//             compress: false,
-//         },
-//     },
-//     preprocess: {
-//         path: function(pathname, req) {
-//             return pathname.replace('/css/','/'); 
-//         },
-//     },
-//     force: true,
-// }));
+app.get('/gallery', (req, res) => {
+    const imgs = fs.readdirSync(`${PUBLIC_PATH}/uploads`);
+    res.render('gallery.pug', { imgs });
+})
 
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

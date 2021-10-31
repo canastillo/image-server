@@ -1,0 +1,14 @@
+doctype html
+html(lang="en")
+head
+    title= 'Gallery'
+body
+    header
+        nav
+            a(href='') Gallery 
+            a(href='/') Upload pictures
+    h1 Gallery
+    main
+        each img in imgs
+            a(href='./uploads/' + img)
+                img(src= './uploads/' + img)
