@@ -11,30 +11,42 @@ const app = express();
 
 app.use(express.static(PUBLIC_PATH));
 
+app.set('views', './views');
+app.set('view engine', 'pug');
+
 const storage = multer.diskStorage({
-    destination: function(req, file, cb) {
+    destination: function (req, file, cb) {
         cb(null, 'public/uploads/');
     },
 
-    // By default, multer removes file extensions so let's add them back
-    filename: function(req, file, cb) {
-        cb(null, file.originalname + '-' + Date.now() + path.extname(file.originalname));
+    filename: function (req, file, cb) {
+        const fileNames = fs.readdirSync(`${PUBLIC_PATH}/uploads`);
+        let fn = file.originalname
+        let counter = 1
+
+        while (fileNames.includes(fn)) {
+            console.log("Vuelta ", counter);
+            fn = `${file.originalname}(${counter++})${path.extname(file.originalname)}`
+        }
+
+        // cb(null, file.originalname + '-' + Date.now() + path.extname(file.originalname));
+        cb(null, fn);
     }
 });
 
 var upload = multer({ storage: storage, fileFilter: helpers.imageFilter })
 
-app.post('/upload-single', upload.single('profile_pic'), (req, res) => {
-        if (req.fileValidationError) {
-            return res.send(req.fileValidationError);
-        }
-        else if (!req.file) {
-            return res.send('Please select an image to upload');
-        }
-        res.send(`You have uploaded this image: <hr/><img src="./uploads/${req.file.filename}" width="500"><hr /><a href="./uploads/${req.file.filename}">View image</a><a href="./">Upload another image</a>`);
-    });
+app.post('/upload-single', upload.single('single-img'), (req, res) => {
+    if (req.fileValidationError) {
+        return res.send(req.fileValidationError);
+    }
+    else if (!req.file) {
+        return res.send('Please select an image to upload');
+    }
 
-
+    fileName = req.file.filename
+    res.render('success', { fileName });
+});
 
 app.get('/gallery', (req, res) => {
     const imgs = fs.readdirSync(`${PUBLIC_PATH}/uploads`);

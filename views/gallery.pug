@@ -7,8 +7,8 @@ body
         nav
             a(href='') Gallery 
             a(href='/') Upload pictures
-    h1 Gallery
     main
-        each img in imgs
-            a(href='./uploads/' + img)
-                img(src= './uploads/' + img)
+        h1 Gallery
+            each img in imgs
+                a(href='./uploads/' + img)
+                    img(src= './uploads/' + img)

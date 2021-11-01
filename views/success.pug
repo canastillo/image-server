@@ -1,0 +1,14 @@
+html(lang="en")
+head
+    title= 'Uploaded'
+body
+    nav
+        a(href='/gallery') Gallery
+        a(href='/') Upload pictures
+    main
+        h1 Image uploaded successfully 
+        p You have uploaded this image: 
+        a(href="./uploads/" + fileName)
+            img(src="./uploads/" + fileName)
+        a(href="/") Upload another image
+        a(href="/gallery") View in gallery

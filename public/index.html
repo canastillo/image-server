@@ -10,15 +10,18 @@
     <header>
         <nav>
             <a href="./gallery">Gallery</a>
-            <a href="/">Upload pictures</a>
+            <a href="#">Upload pictures</a>
         </nav>
     </header>
     <main>
 
     <form method="POST" action="/upload-single" enctype="multipart/form-data">
+        <div id="img-preview">
+
+        </div>
         <div>
-            <label>Select your profile picture:</label>
-            <input type="file" name="profile_pic" />
+            <label>Select a picture:</label>
+            <input type="file" accept="image/*" name="single-img" id="single-img"/>
         </div>
         <div>
             <input type="submit" name="btn_upload_profile_pic" value="Upload" />
@@ -28,7 +31,7 @@
 
 </main>
 
-
+<script src="./script.js"></script>
     
 </body>
 </html>
